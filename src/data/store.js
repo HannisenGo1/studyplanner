@@ -4,6 +4,7 @@ import { getToday } from "../utils/date.js";
 
 const useStore = create(set => ({
 	todos: todos,
+	setTodos: (newTodos) => set ({todos: newTodos}),
 	todayName: getToday(),
 	
 	toggleTodo: id =>

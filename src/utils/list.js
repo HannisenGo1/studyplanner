@@ -1,12 +1,29 @@
-
-// TODO: write unit tests for this function, and finish it
 function splitTodosIntoDays(todos) {
-	const mo = todos.filter(t => t.day === 'mo')
-	const ti = todos.filter(t => t.day === 'ti')
-	const on = todos.filter(t => t.day === 'on')
-
-	return [mo, ti, on]
+    const days = {
+        måndag: [],
+        tisdag: [],
+        onsdag: [],
+        torsdag: [],
+        fredag: [],
+        lördag: [],
+        söndag: []
+    };
+    
+    todos.forEach(todo => {
+        if (days[todo.day]) {
+            days[todo.day].push(todo);
+        }
+    });
+    
+    return days;
 }
+
+export { splitTodosIntoDays };
+
+
+
+
+
 
 // Tips! Du kan få användning för funktioner som:
 // + kopierar en lista och byter plats på två element (snooze)
@@ -14,4 +31,4 @@ function splitTodosIntoDays(todos) {
 // https://www.w3schools.com/jsref/jsref_splice.asp
 // https://www.freecodecamp.org/news/javascript-splice-how-to-use-the-splice-js-array-method/
 
-export { splitTodosIntoDays }
+

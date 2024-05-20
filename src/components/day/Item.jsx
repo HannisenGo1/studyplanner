@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { useStore } from '../../data/store';
 
-const Item = ({ item, todos}) => {
+const Item = ({ item }) => {
 	let itemClass = ''
 	if( item.done ) itemClass += 'done'
 	if( item.late ) itemClass += 'due'
@@ -8,6 +9,10 @@ const Item = ({ item, todos}) => {
 	const [editing, setEditing] = useState(false);
 	const [editedText, setEditedText] = useState(item.text);
 	const [checked, setChecked] = useState(item.done);
+	
+	const setTodos = useStore(state => state.setTodos);
+	const todos = useStore(state => state.todos);
+	
 	
 	const handleToggleEdit = () => {
 		setEditing(!editing);

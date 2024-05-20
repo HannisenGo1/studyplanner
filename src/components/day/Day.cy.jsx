@@ -3,21 +3,20 @@ import Day from './Day';
 
 describe('<Day />', () => {
   it('renders all week days', () => {
-    // Montera Day-komponenten och skicka med en tom dag-array
-    cy.mount(<Day day={[]} />);
+    // Skapa ett exempel på en dag med namn och tom todos-array
+    const exampleDay = {
+      name: 'Måndag',
+      todos: []
+    };
 
-    // Kontrollera att varje veckodag renderas korrekt
+    // Montera Day-komponenten och skicka med ett korrekt format
+    cy.mount(<Day day={exampleDay} />);
+
+    // Kontrollera att dagen renderas korrekt
     cy.contains('Måndag');
-    cy.contains('Tisdag');
-    cy.contains('Onsdag');
-    cy.contains('Torsdag');
-    cy.contains('Fredag');
-  
 
     // Du kan också göra andra kontroller för din komponent här
     // Till exempel att kontrollera att knappen 'Ny uppgift' finns
-
-    // Exempel:
     cy.get('button').should('contain', 'Ny uppgift');
   });
 });

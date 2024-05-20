@@ -1,32 +1,64 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Item from './Item';
+import { useStore } from '../../data/store';
 
 const Day = ({ day }) => {
-  const daysOfWeek = ['Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'lördag', 'söndag'];
+  if (!day) {
+    return <div>Inga uppgifter</div>;
+  }
+  
+  const { name, todos = [] } = day;
+  const [newItemText, setNewItemText] = useState('');
+  const [adding, setAdding] = useState(false);
+  const setTodos = useStore(state => state.setTodos);
+  
+  
+  const handleAddNewItem = () => {
+    if (newItemText.trim() === '') return;
+    const newItem = {
+      id: Math.max(...todos.map(item => item.id)) + 1,
+      day: name.slice(0, 2).toLowerCase(),
+      done: false,
+      late: false,
+      text: newItemText,
+    };
+    setTodos([...todos, newItem]);
+    setNewItemText('');
+    setAdding(false);
+  };
   
   return (
     <div className="day">
-    {daysOfWeek.map((dayName, index) => (
-      <div key={index}>
-      <h2>{dayName}</h2>
-      
-      {/*  rendera Item-komponenter för varje dag  */}
-      {day.map(item => (
+    <h2>{name}</h2>
+    
+    {/* Rendera Item-komponenter för varje uppgift på den aktuella dagen */}
+    {Array.isArray(todos) && todos.length > 0 ? (
+      todos.map(item => (
         <Item key={item.id} item={item} />
-      ))}
-      
-      <div className="controls">
-      <button>Ny uppgift</button>
-      </div>
-      </div>
-    ))}
+      ))
+    ) : (
+      <p>Inga uppgifter</p>
+    )}
+    
+    <div className="controls">
+    {adding ? (
+      <>
+      <input
+      type="text"
+      value={newItemText}
+      onChange={(e) => setNewItemText(e.target.value)}
+      placeholder="Ny uppgift"
+      />
+      <button onClick={handleAddNewItem}>Lägg till</button>
+      <button onClick={() => setAdding(false)}>Avbryt</button>
+      </>
+    ) : (
+      <button onClick={() => setAdding(true)}>Ny uppgift</button>
+    )}
+    </div>
     </div>
   );
 };
 
 export default Day;
-{/*  Acceptans kriterier:
-1.När jag navigerar till sidan där mina uppgifter visas, 
-bör jag kunna se alla dagar i veckan.
-2.Dagarna ska komma i ordning från måndag till söndag
-*/}
+
