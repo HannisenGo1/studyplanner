@@ -11,9 +11,9 @@ const Main = () => {
 	return (
 		<main>
 			<div className="day-view">
-				{days.map(d => (
-					<Day day={d} key={1 /* TODO kom på något sätt att ge varje dag en unik "key" */} />
-				))}
+			{days.map((d, index) => (
+					<Day day={d} key={index} />	
+					))}
 			</div>
 
 			<hr />
