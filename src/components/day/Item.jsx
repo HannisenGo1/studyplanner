@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useStore } from '../../data/store';
 
 const Item = ({ item }) => {
+	console.log('Rendering Item component for:', item);
 	let itemClass = ''
 	if( item.done ) itemClass += 'done'
 	if( item.late ) itemClass += 'due'
+	
 	
 	const [editing, setEditing] = useState(false);
 	const [editedText, setEditedText] = useState(item.text);
@@ -43,35 +45,35 @@ const Item = ({ item }) => {
 		onChange={handleChange}
 		/>
 		{editing ? (
-			<div>
-			<input
-			type="text"
-			value={editedText}
-			onChange={handleTextChange}
-			autoFocus
-			/>
-			<span
-			title="Spara ändringar"
-			onClick={handleSave}
-			style={{ color: "green", cursor: "pointer" }}
-			>
-			✔️
-			</span>
-			</div>
-		) : (
-			<div>
-			<label onClick={handleToggleEdit}>
-			{item.text}
-			</label>
-			<span title="Ändra" onClick={handleToggleEdit}>
-			✍️
-			</span>
-			</div>
-		)}
-		<span title="Ta bort" onClick={handleDelete}>
-		🗑️
-		</span>
-		</div>
+			 <div className="edit-container">
+			 <input
+			   type="text"
+			   value={editedText}
+			   onChange={handleTextChange}
+			   autoFocus
+			 />
+			 <span
+			   className="icon save"
+			   title="Spara ändringar"
+			   onClick={handleSave}
+			 >
+			   ✔️
+			 </span>
+		   </div>
+		 ) : (
+		   <div className="edit-container">
+			 <label onClick={handleToggleEdit}>
+			   {item.text}
+			 </label>
+			 <span className="icon edit" title="Ändra" onClick={handleToggleEdit}>
+			   ✍️
+			 </span>
+			 <span className="icon delete" title="Ta bort" onClick={handleDelete}>
+			   🗑️
+			 </span>
+		   </div>
+		 )}
+	   </div>
 	);
 };
 

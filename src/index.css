@@ -110,6 +110,14 @@ h2 {
 .today h2 {
 	text-decoration: underline;
 }
+.item div {
+	display: flex;
+	align-items: center; 
+  }
+  
+  .item div span.icon {
+	margin-right: 8px; 
+  }
 
 .prio-list [type="search"] {
 	margin: 0 0 1.5em 0;
@@ -140,10 +148,24 @@ h2 {
 	justify-content: center;
 	align-items: center;
 }
+.icon {
+	display: inline-block;
+	 margin-right: 8px;
+	cursor: pointer; 
+  }
 
 footer {
 	text-align: center;
 	margin: 1em;
 	border-top: 1px solid var(--c3);
 	padding-top: 0.5em;
+}
+.button-add{
+	width: 2em;
+	background:none;
+	
+}
+.button-no{
+	width: 2em;
+	background: none;
 }

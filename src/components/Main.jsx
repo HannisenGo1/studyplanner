@@ -1,28 +1,24 @@
-import { useStore } from '../data/store.js';
-import Day from "./day/Day";
-import PrioList from "./prio-list/PrioList.jsx";
-import { splitTodosIntoDays } from '../utils/list.js';
+import React from 'react';
+import { splitTodosIntoDays } from '../utils/list'
+import Day from '../components/day/Day';
+import { useStore } from '../data/store'
 
 const Main = () => {
-	const todos = useStore(state => state.todos);
-	const splitDays = splitTodosIntoDays(todos);
-	// hämta arrayen med dagar(keys) hämtar med namn 
-	const days = Object.keys(splitDays).map(name => ({ name, todos: splitDays[name] }));
+  const todos = useStore(state => state.todos);
+  const days = splitTodosIntoDays(todos);
 
-	return (
-		<main>
-		<div className="day-view">
-		{days.map((day, index) => (
-			<Day day={day} key={index} />  
-		))}
-		</div>
-		
-		<hr />
-		
-		<PrioList />
-		</main>
-	);
+  const dayNames = ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"];
+
+  return (
+	<main> 
+    <div className="day-view">
+      {days.map((dayTodos, index) => (
+        <Day key={dayNames[index]} day={{ name: dayNames[index], todos: dayTodos }} />
+      ))}
+    </div>
+
+	</main>
+  );
 };
 
 export default Main;
-
