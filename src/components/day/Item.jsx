@@ -15,6 +15,13 @@ const Item = ({ item }) => {
 	const setTodos = useStore(state => state.setTodos);
 	const todos = useStore(state => state.todos);
 	
+	const toggleTodo = useStore(state => state.toggleTodo);
+	
+	const handleChange = () => {
+		toggleTodo(item.id);
+	};
+	
+	
 	
 	const handleToggleEdit = () => {
 		setEditing(!editing);
@@ -29,52 +36,52 @@ const Item = ({ item }) => {
 		setEditing(false);
 	};
 	
-	const handleChange = () => {
-		setChecked(!checked);
-	};
 	
 	const handleDelete = () => {
 		const updatedTodos = todos.filter(todo => todo.id !== item.id);
 		setTodos(updatedTodos);
 	}
 	return (
-		<div className="item">
+		<div className={`item ${item.done ? 'done' : ''}`}>
 		<input
 		type="checkbox"
-		checked={checked}
+		checked={item.done}
 		onChange={handleChange}
 		/>
 		{editing ? (
-			 <div className="edit-container">
-			 <input
-			   type="text"
-			   value={editedText}
-			   onChange={handleTextChange}
-			   autoFocus
-			 />
-			 <span
-			   className="icon save"
-			   title="Spara ändringar"
-			   onClick={handleSave}
-			 >
-			   ✔️
-			 </span>
-		   </div>
-		 ) : (
-		   <div className="edit-container">
-			 <label onClick={handleToggleEdit}>
-			   {item.text}
-			 </label>
-			 <span className="icon edit" title="Ändra" onClick={handleToggleEdit}>
-			   ✍️
-			 </span>
-			 <span className="icon delete" title="Ta bort" onClick={handleDelete}>
-			   🗑️
-			 </span>
-		   </div>
-		 )}
-	   </div>
+			<div className="edit-container">
+			<input
+			type="text"
+			value={editedText}
+			onChange={handleTextChange}
+			autoFocus
+			/>
+			<span
+			className="icon save"
+			title="Spara ändringar"
+			onClick={handleSave}
+			>
+			✔️
+			</span>
+			</div>
+		) : (
+			<div className="edit-container">
+			<label onClick={handleToggleEdit}>
+			{item.text}
+			</label>
+			<span className="icon edit" title="Ändra" onClick={handleToggleEdit}>
+			✍️
+			</span>
+			<span className="icon delete" title="Ta bort" onClick={handleDelete}>
+			🗑️
+			</span>
+			</div>
+		)}
+		</div>
 	);
 };
 
 export default Item
+
+//const clickedTodo = useStore.getState().todos.find(todo => todo.id === item.id)
+//expect ( clickedTodo.done).should('equal', true)

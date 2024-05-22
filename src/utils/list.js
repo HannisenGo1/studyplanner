@@ -1,21 +1,32 @@
 function splitTodosIntoDays(todos) {
     if (!Array.isArray(todos)) {
         console.error("Expected todos to be an array but got:", todos);
-        return [[], [], [], [], [], [], []];
+        return {
+            måndag: [],
+            tisdag: [],
+            onsdag: [],
+            torsdag: [],
+            fredag: [],
+            lördag: [],
+            söndag: []
+        };
     }
-
-    const Måndag = todos.filter(t => t.day === 'Måndag');
-    const Tisdag = todos.filter(t => t.day === 'Tisdag');
-    const Onsdag = todos.filter(t => t.day === 'Onsdag');
-    const Torsdag = todos.filter(t => t.day === 'Torsdag');
-    const Fredag = todos.filter(t => t.day === 'Fredag');
-    const Lördag = todos.filter(t => t.day === 'Lördag');
-    const Söndag = todos.filter(t => t.day === 'Söndag');
-
-    return [Måndag, Tisdag, Onsdag, Torsdag, Fredag, Lördag, Söndag];
+    
+    const days = {
+        måndag: todos.filter(t => t.day.toLowerCase() === 'måndag'),
+        tisdag: todos.filter(t => t.day.toLowerCase() === 'tisdag'),
+        onsdag: todos.filter(t => t.day.toLowerCase() === 'onsdag'),
+        torsdag: todos.filter(t => t.day.toLowerCase() === 'torsdag'),
+        fredag: todos.filter(t => t.day.toLowerCase() === 'fredag'),
+        lördag: todos.filter(t => t.day.toLowerCase() === 'lördag'),
+        söndag: todos.filter(t => t.day.toLowerCase() === 'söndag'),
+    };
+    
+    return days;
 }
 
 export { splitTodosIntoDays };
+
 
 
 // Tips! Du kan få användning för funktioner som:

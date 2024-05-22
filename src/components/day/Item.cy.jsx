@@ -4,7 +4,7 @@ describe('<Item />', () => {
     it('renders a todo item with proper classes and labels', () => {
         const getItem = {
             id: 1,
-            text: 'Testa att skapa en todo',
+            text: 'Testning hääär',
             done: false,
             late: false
         };
@@ -22,7 +22,7 @@ describe('<Item />', () => {
         cy.get('.item').should('not.have.class', 'due'); 
         
         cy.contains('Testa att skapa en todo');
-        
+      
         cy.get('input[type="checkbox"]').should('not.be.checked'); 
         
         

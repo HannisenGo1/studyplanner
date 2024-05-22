@@ -169,3 +169,6 @@ footer {
 	width: 2em;
 	background: none;
 }
+.item.done {
+	background-color: lightgreen;
+  }
