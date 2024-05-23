@@ -1,4 +1,4 @@
-// TODO: hämta dagens datum från store
+
 import { getToday } from '../utils/date'
 const Footer = () => (
 	<footer>

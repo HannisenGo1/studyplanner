@@ -1,8 +1,15 @@
-const weekdays = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag']
+//const weekdays = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag']
 
-// Den här funktionen är beroende av JavaScripts Date-modul och är svår att testa separat. Du behöver inte skriva enhetstest för den.
+//function getToday() {
+//	return weekdays[new Date().getDay()]
+//}
+//export { getToday }
 function getToday() {
-	return weekdays[new Date().getDay()]
+    const today = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
+    const dateString = today.toLocaleDateString('sv-SE', options);
+    
+    return dateString;
 }
 
-export { getToday }
+export { getToday };

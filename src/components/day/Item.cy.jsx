@@ -17,22 +17,22 @@ describe('<Item />', () => {
         cy.mount(<Item item={getItem} onUpdate={onUpdateTest} />);
         
         
-        cy.get('.item').should('exist');
+        cy.get('.item').should('be.visible');
         cy.get('.item').should('not.have.class', 'done');  
         cy.get('.item').should('not.have.class', 'due'); 
         
-        cy.contains('Testa att skapa en todo');
+    
       
         cy.get('input[type="checkbox"]').should('not.be.checked'); 
         
         
-        //cy.contains('✍️'); //  att ändra-ikonen finns
-        //cy.contains('🗑️'); // att ta bort-ikonen finns
+        cy.contains('✍️'); 
+        cy.contains('🗑️'); 
         cy.contains('✍️').click();
         cy.contains('✔️');
-        // efter klicket och kontrollera ändringen.
+        
         cy.contains('✔️').click().then(() => {
-            cy.get('.item label').should('exist');
+            cy.get('.item label').should('be.visible');
         });
         
         

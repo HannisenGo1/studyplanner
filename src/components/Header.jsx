@@ -1,8 +1,21 @@
-const Header = () => (
-	<header>
-		<h1> Min vecka </h1>
-		<button className="restart-week"> Starta om vecka </button>
-	</header>
-)
+import { useStore } from '../data/store';
 
-export default Header
+const Header = () => {
+    const resetTodos = useStore(state => state.resetTodos);
+
+    
+    const handleRestartWeek = () => {
+        resetTodos();
+    };
+
+    return (
+        <header>
+            <h1>Min Vecka  </h1>
+            <button className="restart-week" onClick={handleRestartWeek}>
+                Starta om vecka
+            </button>
+        </header>
+    );
+};
+
+export default Header;

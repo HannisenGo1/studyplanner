@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import PrioItem from './PrioItem';
 import { useStore } from '../../data/store.js';
 
-// TO-DO: göra så att filtreringen blir kopplat till todo/items
+// TO-DO: göra så att filtreringen blir kopplat till todo/items i ordning beroende på dag.
+// INTE KLAR !!!!
 
 const PrioList = () => {
   const todos = useStore(state => state.todos);
@@ -17,7 +18,7 @@ const PrioList = () => {
     <div className="prio-list">
     <h2>Vad ska jag göra nu?</h2>
     <div className="list-container">
-    {/* Input för att skriva in söktexten */}
+    
     <input
     type="search"
     placeholder="Filtrera uppgifter"
