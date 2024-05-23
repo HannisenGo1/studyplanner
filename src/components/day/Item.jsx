@@ -9,15 +9,13 @@ const Item = ({ item }) => {
 	const [editing, setEditing] = useState(false);
 	const [editedText, setEditedText] = useState(item.text);
 	const [checked, setChecked] = useState(item.done);
-	
-	const daysOfWeek = ['måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag', 'söndag'];
 
 	const [todos, setTodos] = useStore(state => [state.todos, state.setTodos]);
     const snoozeTodo = useStore(state => state.snoozeTodo);
 	const toggleTodo = useStore(state => state.toggleTodo);
 	
 	
-	console.log('items::', item)
+
 	const handleChange = () => {
 		toggleTodo(item.id);
 	};
