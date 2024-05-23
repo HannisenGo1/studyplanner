@@ -7,6 +7,5 @@ export default defineConfig({
     server: {
         host: true,
         port: 5555,
-        cors: true // Lägg till denna rad för att aktivera CORS  tillåta åtkomst 
     }
 })
