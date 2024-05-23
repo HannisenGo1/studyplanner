@@ -92,6 +92,13 @@ h2 {
 	text-align: center;
 }
 
+.count-div{
+	font-size: 1.1em;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom:0.5em;
+}
+
 .day {
 	display: flex;
 	flex-direction: column;

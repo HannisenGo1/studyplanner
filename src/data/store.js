@@ -29,21 +29,21 @@ const useStore = create(set => ({
 	
 	setTodayName: newTodayName => set({ todayName: newTodayName }),
 	
-	// snooza till nästa dag! 
-	snoozeTodo: id =>
-		set(state => {
-		const updatedTodos = state.todos.map(todo => {
-			if (todo.id === id) {
-				const currentDayIndex = daysOfWeek.indexOf(todo.day);
-				const nextDayIndex = (currentDayIndex + 1) % daysOfWeek.length;
-				const nextDay = daysOfWeek[nextDayIndex];
-				return { ...todo, day: nextDay };
-			}
-			return todo;
-		});
-		return { todos: updatedTodos };
-	}),
+	snoozeTodo: id => {
+        set(state => {
+            const currentTodos = state.todos; 
+            const updatedTodos = currentTodos.map(todo => {
+                if (todo.id === id) {
+                    const currentDayIndex = daysOfWeek.indexOf(todo.day);
+                    const nextDayIndex = (currentDayIndex + 1) % daysOfWeek.length;
+                    const nextDay = daysOfWeek[nextDayIndex];
+                    return { ...todo, day: nextDay };
+                }
+                return todo;
+            });
+            return { todos: updatedTodos };
+        });
+    }
 }));
 
-
-export { useStore }
+export { useStore };

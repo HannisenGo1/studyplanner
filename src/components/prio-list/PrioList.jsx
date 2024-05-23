@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import PrioItem from './PrioItem';
 import { useStore } from '../../data/store.js';
-import { getToday } from '../../utils/date.js';
+
 
 const PrioList = () => {
   const todos = useStore(state => state.todos);
   const [searchText, setSearchText] = useState('');
-  const today = getToday();
+  
 
   const filteredAndSortedItems = todos
     .filter(item => item.text.toLowerCase().includes(searchText.toLowerCase()))
