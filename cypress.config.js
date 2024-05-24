@@ -13,6 +13,6 @@ export default defineConfig({
 
       },
         baseUrl: 'http://localhost:5555',
-        supportFile: false,
+        //supportFile: false,
     },
 });
