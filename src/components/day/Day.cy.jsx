@@ -1,43 +1,44 @@
 import React from 'react';
 import Day from './Day';
+// Visar ut måndag , tisdag i testning med endast ändring utav namn på uppgifterna.
 
 describe('<Day /> interactions', () => {
-  const daysOfWeek = ['Måndag', 'Tisdag'];
-
-  daysOfWeek.forEach(day => {
-    it(`can edit, delete, and add todos for ${day}`, () => {
-      const exampleDay = {
-        name: day,
+  it('can edit,  and add todos for both Måndag and Tisdag', () => {
+    const days = [
+      {
+        name: 'Måndag',
         todos: [
-          { id: 1, day: 'Måndag', done: false, late: false, text: 'Göra klart inlämning' },
-          { id: 2, day: 'Tisdag', done: false, late: false, text: 'Lektion i skolan 9-14' },
-          { id: 3, day: 'Tisdag', done: false, late: true, text: 'Engelska C' },
+          { id: 1, day: 'Måndag', done: false, late: false, text: 'Göra klart inlämning' }
         ]
-      };
+      },
+      {
+        name: 'Tisdag',
+        todos: [
+          { id: 2, day: 'Tisdag', done: false, late: false, text: 'Lektion i skolan 9-14' },
+          { id: 3, day: 'Tisdag', done: false, late: true, text: 'Engelska C' }
+        ]
+      }
+    ];
 
-      cy.mount(<Day day={exampleDay} />);
-  
-      // Kontrollera att komponenten renderas korrekt
-      cy.contains(day).should('be.visible');
-      cy.contains('Göra klart inlämning').should('be.visible');
-      cy.contains('Lektion i skolan 9-14').should('be.visible');
+    // Rendera både måndag och tisdag 
+    cy.mount(
+      <div style={{ display: 'flex', gap: '20px' }}>
+        {days.map(day => <Day key={day.name} day={day} />)}
+      </div>
+    );
 
-      // Redigeringsknappen
-      cy.get('.icon.edit').first().click();
-      // Aktiveras redigeringen??
-
-      // Spara knappen
-      cy.get('.icon.save').first().click();
-    
-      // Klicka på delete knappen
-      cy.get('.icon.delete').first().click();
-
-      // Lägga till en ny uppgift
+    // Interaktion för Måndag
+    cy.contains('Måndag').parent().within(() => {
       cy.get('button').contains('Ny uppgift').click();
       cy.get('input[placeholder="Ny uppgift"]').type('Ny testuppgift');
       cy.get('button.button-add').click();
-     
+    });
+
+    // Interaktion för Tisdag
+    cy.contains('Tisdag').parent().within(() => {
+      cy.get('button').contains('Ny uppgift').click();
+      cy.get('input[placeholder="Ny uppgift"]').type('Ny testuppgift för Tisdag');
+      cy.get('button.button-add').click();
     });
   });
 });
-

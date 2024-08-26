@@ -43,7 +43,12 @@ const useStore = create(set => ({
             });
             return { todos: updatedTodos };
         });
-    }
+    },
+	deleteTodo: id => {
+		set(state => ({
+			todos: state.todos.filter(todo => todo.id !== id)
+		}));
+	}
 }));
 
 export { useStore };

@@ -39,9 +39,11 @@ const Item = ({ item }) => {
 	}
 	
 	const handleDelete = () => {
+		console.log('Deleting item with id:', item.id); 
 		const updatedTodos = todos.filter(todo => todo.id !== item.id);
+		console.log('Updated todos:', updatedTodos);
 		setTodos(updatedTodos);
-	}
+	  };
 	return (
 		<> 
 		<div className={`item ${item.done ? 'done' : ''}`} data-cy="todo-item">
@@ -69,7 +71,7 @@ const Item = ({ item }) => {
 			onClick={handleToggleEdit} data-cy="edit-icon">  ✍️  </span>
 			
 			<span className="icon delete" title="Ta bort"  
-			onClick={handleDelete}> 🗑️ </span>
+			onClick={handleDelete} data-cy="delete-icon"> 🗑️ </span>
 			
 			<span className="icon snooze" title="Snooze" 
 			onClick={handleSnooze} 
