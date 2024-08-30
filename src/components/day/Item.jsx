@@ -8,7 +8,7 @@ const Item = ({ item }) => {
 	if (item.late) itemClass += ' due';
 	
 	const [editing, setEditing] = useState(false);
-	const [editedText, setEditedText] = useState(item.text);
+	const [editedText, setEditedText] = useState(item.text || '');
 	const todos = useStore(state => state.todos);
     const setTodos = useStore(state => state.setTodos);
 	const snoozeTodo = useStore(state => state.snoozeTodo);
