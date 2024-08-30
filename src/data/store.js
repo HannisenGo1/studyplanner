@@ -1,35 +1,36 @@
 import { create } from "zustand";
-import { todos } from './data.js'
+import { todos as initialTodos } from './data.js'; 
 import { getToday } from "../utils/date.js";
-// värdet från todo listan,
-// uppdatera listan med den nya listan
-//hämta dagens namn,datum
+
 const daysOfWeek = ['måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag', 'söndag'];
 
-
 const useStore = create(set => ({
-	todos: todos,
-	setTodos: (newTodos) => set ({todos: newTodos}),
-	todayName: getToday(),
-	
-	// för todo om -> done
-	toggleTodo: id =>
-		set(state => ({
-		...state,
-		todos: state.todos.map(t =>
-			t.id === id ? { ...t, done: !t.done } : t
-		),
-	})),
-	//återställa listan med reset och gör den till en tom
-	// uppdatera listan med den nya listan
-	//dagens datum,namn
-	resetTodos: () => set(state => ({
-		todos: state.todos.filter(t => !t.done)
-	})),
-	
-	setTodayName: newTodayName => set({ todayName: newTodayName }),
-	
-	snoozeTodo: id => {
+    todos: initialTodos, 
+    setTodos: (newTodos) => set({ todos: newTodos }),
+    todayName: getToday(),
+
+    toggleTodo: id =>
+        set(state => ({
+            todos: state.todos.map(t =>
+                t.id === id ? { ...t, done: !t.done } : t
+            ),
+        })),
+
+        resetTodos: () => set(state => ({ t: state.todos.map(t => ({
+            ...t,
+            done: false
+        }))
+    })),
+
+    deleteTodo: id => {
+        set(state => ({
+            todos: state.todos.filter(todo => todo.id !== id)
+        }));
+    },
+
+    setTodayName: newTodayName => set({ todayName: newTodayName }),
+
+    snoozeTodo: id => {
         set(state => {
             const currentTodos = state.todos; 
             const updatedTodos = currentTodos.map(todo => {

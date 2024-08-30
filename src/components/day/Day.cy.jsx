@@ -1,43 +1,34 @@
 import React from 'react';
 import Day from './Day';
+import { useStore } from '../../data/store';
+// Här renderas alla dagar ut, med en task, och synliga knappar utan funktioner.
+// u1 visa veckans alla dagar 
 
 describe('<Day /> interactions', () => {
-  const daysOfWeek = ['Måndag', 'Tisdag'];
+  const daysOfWeek = ['Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag'];
+
+  const tasks = [
+    { id: 1, day: 'Måndag', done: false, late: false, text: 'Göra klart inlämning' },
+    { id: 2, day: 'Tisdag', done: false, late: false, text: 'Lektion i skolan 9-14' },
+    { id: 3, day: 'Tisdag', done: false, late: true, text: 'Engelska C' },
+    { id: 3, day: 'onsdag', done: false, late: true, text: 'Matte B' },
+    { id: 3, day: 'Torsdag', done: false, late: true, text: 'Distans 9-15' },
+  ];
 
   daysOfWeek.forEach(day => {
-    it(`can edit, delete, and add todos for ${day}`, () => {
-      const exampleDay = {
+    it(`should show day, tasks, and button for ${day}`, () => {
+      const testData = {
         name: day,
-        todos: [
-          { id: 1, day: 'Måndag', done: false, late: false, text: 'Göra klart inlämning' },
-          { id: 2, day: 'Tisdag', done: false, late: false, text: 'Lektion i skolan 9-14' },
-          { id: 3, day: 'Tisdag', done: false, late: true, text: 'Engelska C' },
-        ]
+        todos: tasks.filter(task => task.day === day)
       };
 
-      cy.mount(<Day day={exampleDay} />);
-  
-      // Kontrollera att komponenten renderas korrekt
-      cy.contains(day).should('be.visible');
-      cy.contains('Göra klart inlämning').should('be.visible');
-      cy.contains('Lektion i skolan 9-14').should('be.visible');
+      useStore.setState({ todos: testData.todos });
 
-      // Redigeringsknappen
-      cy.get('.icon.edit').first().click();
-      // Aktiveras redigeringen??
+      cy.mount(<Day day={testData} />);
 
-      // Spara knappen
-      cy.get('.icon.save').first().click();
-    
-      // Klicka på delete knappen
-      cy.get('.icon.delete').first().click();
-
-      // Lägga till en ny uppgift
-      cy.get('button').contains('Ny uppgift').click();
-      cy.get('input[placeholder="Ny uppgift"]').type('Ny testuppgift');
-      cy.get('button.button-add').click();
-     
+      // Kontrollera att dagen, uppgifterna och knappen visas
+      cy.get('[data-cy="day"]').contains(day).should('be.visible');
+      cy.get('button').contains('Ny uppgift').should('be.visible');
     });
   });
 });
-

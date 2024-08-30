@@ -1,40 +1,64 @@
-import Item from "./Item";
+import React from 'react';
+import Item from './Item';
+import { useStore } from '../../data/store';
 
-describe('<Item />', () => {
-    it('renders a todo item with proper classes and labels', () => {
-        const getItem = {
-            id: 1,
-            text: 'Testning hääär',
-            done: false,
-            late: false
-        };
-        
-        const onUpdateTest = todo => {
-            console.log("updated todos:", todo)
-        }
-        
-        // Item-komponenten todo (getItem) som props
-        cy.mount(<Item item={getItem} onUpdate={onUpdateTest} />);
-        
-        
-        cy.get('.item').should('be.visible');
-        cy.get('.item').should('not.have.class', 'done');  
-        cy.get('.item').should('not.have.class', 'due'); 
-        
+describe('testing the Item component', () => {
+    const todos = [
+        { id: 1, day: 'måndag', done: true, late: false, text: 'Göra klart inlämning' },
+        { id: 2, day: 'tisdag', done: true, late: true, text: 'Lektion i skolan 9-16' },
+        { id: 3, day: 'måndag', done: false, late: true, text: 'Övning 1' },
+        { id: 4, day: 'onsdag', done: false, late: false, text: 'Repetera lektionen' },
+    ];
     
-      
-        cy.get('input[type="checkbox"]').should('not.be.checked'); 
-        
-        
-        cy.contains('✍️'); 
-        cy.contains('🗑️'); 
-        cy.contains('✍️').click();
-        cy.contains('✔️');
-        
-        cy.contains('✔️').click().then(() => {
-            cy.get('.item label').should('be.visible');
-        });
-        
-        
+    beforeEach(() => {
+        useStore.setState({ todos });
     });
+    
+    it('renders a todo item with proper classes and labels', () => {
+        cy.mount(<Item item={todos[0]} />);
+        
+        cy.get('[data-cy="todo-item"]').should('have.class', 'done');
+     
+        cy.get('[data-cy="text-label"]').contains('Göra klart inlämning').should('be.visible');
+
+        cy.get('[data-cy="todo-item"]').should('be.visible');
+        cy.get('[data-cy="todo-item"]').should('have.class', 'done');
+        cy.get('[data-cy="todo-item"]').should('not.have.class', 'due');
+        
+        cy.get('input[type="checkbox"]').should('be.checked');
+        
+        cy.get('[data-cy="edit-icon"]').should('be.visible');
+        cy.get('[data-cy="delete-icon"]').should('be.visible');
+        cy.get('[data-cy="snooze-icon"]').should('be.visible');
+    });
+    
+    it('should delete a todo item from the store', () => {
+        const initialTodos = [...todos]; 
+        const itemIdToDelete = initialTodos[0].id;
+        
+     
+        useStore.getState().deleteTodo(itemIdToDelete);
+        
+        
+        const updatedTodos = useStore.getState().todos;
+        expect(updatedTodos).to.not.deep.include(initialTodos.find(todo => todo.id === itemIdToDelete));
+    });
+    
+    it('should edit a todo item', () => {
+        const newText = 'Ny todo text';
+        cy.mount(<Item item={todos[0]} />);
+
+
+        cy.get('[data-cy="edit-icon"]').click();
+        cy.get('[data-cy="input-field"]').should('be.visible').clear().type(newText);
+
+        cy.get('[data-cy="save-icon"]').click();
+        cy.wait(1000);
+
+      
+        cy.get('[data-cy="text-label"]').invoke('text').then(text => {
+            expect(text.trim()).to.equal(newText);
+        });
+    });
+    
 });

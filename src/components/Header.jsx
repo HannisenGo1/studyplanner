@@ -2,7 +2,7 @@ import { useStore } from '../data/store';
 
 const Header = () => {
     const resetTodos = useStore(state => state.resetTodos);
-
+   
     
     const handleRestartWeek = () => {
         resetTodos();

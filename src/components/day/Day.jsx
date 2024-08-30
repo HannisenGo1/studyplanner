@@ -28,7 +28,7 @@ const Day = ({ day }) => {
   };
   
   return (
-    <div className="day">
+    <div className="day" data-cy="day">
     <h2>{name}</h2>
     {Array.isArray(todos) && todos.length > 0 ? (
       todos.map(item => (
@@ -46,8 +46,8 @@ const Day = ({ day }) => {
       onChange={(e) => setNewItemText(e.target.value)}
       placeholder="Ny uppgift"
       />
-      <button className="button-add" onClick={handleAddNewItem}> ✔️ </button>
-      <button className="button-no" onClick={() => setAdding(false)}>❌</button>
+      <button className="button-add" data-cy="addbtn"onClick={handleAddNewItem}> ✔️ </button>
+      <button className="button-no" data-cy="notaddbtn"onClick={() => setAdding(false)}>❌</button>
       </>
     ) : (
       <button onClick={() => setAdding(true)}>Ny uppgift</button>
