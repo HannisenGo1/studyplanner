@@ -9,8 +9,8 @@ const Item = ({ item }) => {
 	
 	const [editing, setEditing] = useState(false);
 	const [editedText, setEditedText] = useState(item.text);
-	
-	const [todos, setTodos] = useStore(state => [state.todos, state.setTodos]);
+	const todos = useStore(state => state.todos);
+    const setTodos = useStore(state => state.setTodos);
 	const snoozeTodo = useStore(state => state.snoozeTodo);
 	const toggleTodo = useStore(state => state.toggleTodo);
 	const deleteTodo = useStore(state => state.deleteTodo);
@@ -25,11 +25,9 @@ const Item = ({ item }) => {
 	
 	const handleTextChange = (e) => {
 		setEditedText(e.target.value);
-		console.log('redigerar text', setEditedText)
 	};
 	
 	const handleSave = () => {
-		console.log('Current todos before update:', todos);
 		const updatedTodos = todos.map(todo =>
 			todo.id === item.id ? { ...todo, text: editedText } : todo
 		);
@@ -48,7 +46,6 @@ const Item = ({ item }) => {
 		console.log('handleDelete called with item id:', item.id);
 		deleteTodo(item.id);
 	};
-	console.log('Item props:', item);  
 
 
 	return (
@@ -60,7 +57,7 @@ const Item = ({ item }) => {
 		/>
 		{editing ? (
 			<div className="edit-container">
-			<input type="text" value={editedText} onChange={handleTextChange} data-cy="input-field"     />
+			<input type="text" value={editedText} onChange={handleTextChange} data-cy="input-field"/>
 			
 			<span className="icon save" title="Spara ändringar" onClick={handleSave} data-cy="save-icon"
 			>✔️</span>

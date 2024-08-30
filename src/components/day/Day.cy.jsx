@@ -2,7 +2,8 @@ import React from 'react';
 import Day from './Day';
 import { useStore } from '../../data/store';
 // Här renderas alla dagar ut, med en task, och synliga knappar utan funktioner.
-// u1 visa veckans alla dagar 
+
+// u1 visa veckans alla dagar (en och en) komponent testning
 
 describe('<Day /> interactions', () => {
   const daysOfWeek = ['Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag'];

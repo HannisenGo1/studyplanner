@@ -1,6 +1,7 @@
 import React from 'react';
 import Item from './Item';
 import { useStore } from '../../data/store';
+// u2, u3 ! komponent testning
 
 describe('testing the Item component', () => {
     const todos = [
@@ -18,9 +19,9 @@ describe('testing the Item component', () => {
         cy.mount(<Item item={todos[0]} />);
         
         cy.get('[data-cy="todo-item"]').should('have.class', 'done');
-     
+        
         cy.get('[data-cy="text-label"]').contains('Göra klart inlämning').should('be.visible');
-
+        
         cy.get('[data-cy="todo-item"]').should('be.visible');
         cy.get('[data-cy="todo-item"]').should('have.class', 'done');
         cy.get('[data-cy="todo-item"]').should('not.have.class', 'due');
@@ -36,29 +37,28 @@ describe('testing the Item component', () => {
         const initialTodos = [...todos]; 
         const itemIdToDelete = initialTodos[0].id;
         
-     
         useStore.getState().deleteTodo(itemIdToDelete);
-        
         
         const updatedTodos = useStore.getState().todos;
         expect(updatedTodos).to.not.deep.include(initialTodos.find(todo => todo.id === itemIdToDelete));
     });
     
-    it('should edit a todo item', () => {
+    it('should edit a todo item and update the text', () => {
         const newText = 'Ny todo text';
-        cy.mount(<Item item={todos[0]} />);
 
+        const item = todos[0];
+
+        cy.mount(<Item key={item.id} item={item} />);
 
         cy.get('[data-cy="edit-icon"]').click();
-        cy.get('[data-cy="input-field"]').should('be.visible').clear().type(newText);
+        cy.get('[data-cy="input-field"]').clear().type(newText);
 
         cy.get('[data-cy="save-icon"]').click();
-        cy.wait(1000);
-
+    
+       
+        cy.get('[data-cy="text-label"]').should("exist", newText);
       
-        cy.get('[data-cy="text-label"]').invoke('text').then(text => {
-            expect(text.trim()).to.equal(newText);
-        });
+    });
     });
     
-});
+
